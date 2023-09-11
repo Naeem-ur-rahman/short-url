@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | URL Shotner</title>
+    <style>
+        table {
+            border: 2px solid black;
+        }
+
+        body {
+            margin: 0 10%;
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        form {
+            padding-bottom: 20px;
+        }
+
+        input {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>URL Shortner Service</h1>
+
+    <% if (locals.id) { %>
+        <p>Your Generated id : 
+            <a href="http://localhost:3001/url/<%= id%>">
+                <%= id %>
+            </a> 
+        </p>
+        <% } %>
+
+            <form action="/url" method="post">
+                <label for="url">Enter your Link : </label>
+                <input type="text" required placeholder="https://example.com" name="url" id="url">
+                <button type="submit">Genarate</button>
+            </form>
+
+            <% if (locals.urls) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serial No</th>
+                            <th>ShortId</th>
+                            <th>RedirectRL</th>
+                            <th>Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url , index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= index+1 %>
+                                </td>
+                                <td>
+                                    <a href='http://localhost:3001/url/<%=url.shortId %>'>
+                                        <%= url.shortId %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="<%= url.redirectURL %>">
+                                        <%= url.redirectURL %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= url.visitHistory.length %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } %>
+
+</body>
+
+</html>
