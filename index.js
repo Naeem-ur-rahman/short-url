@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const { restrictToLoggedinUserOnly } = require('./middleware/auth')
 
 const urlRoute = require('./routes/url');
 const staticRoute = require('./routes/staticRouter');
@@ -19,9 +21,12 @@ app.set('views', path.resolve('./views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/', staticRoute);
+app.use(cookieParser());
+
+
+app.use('/url', restrictToLoggedinUserOnly, urlRoute);
 app.use('/user', userRoute);
-app.use('/url', urlRoute);
+app.use('/', staticRoute);
 
 
 app.listen(PORT, () => console.log(`Server listening at PORT ${PORT}`))

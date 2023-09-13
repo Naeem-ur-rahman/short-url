@@ -11,7 +11,12 @@ async function handleSignupView(req, res) {
     return res.render('signup');
 }
 
+async function handleLoginView(req, res) {
+    return res.render('login');
+}
+
 module.exports = {
     handleHomeView,
     handleSignupView,
+    handleLoginView,
 }
