@@ -17,9 +17,8 @@ async function handleUserlogin(req, res) {
     const user = await User.findOne({ email, password });
     if (!user) return res.render('login', { error: "Invalid Email or Password" });
 
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uid', sessionId);
+    const tokken = setUser(user);
+    res.cookie('uid', tokken);
     return res.redirect('/');
 }
 
